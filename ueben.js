@@ -1,11 +1,13 @@
 "use strict"
 
-let stadt = "Bonn";
-let ddd = "erdfve";
+const mindestalter = 18;
 
-let ausgabe = `Hallo ${ddd}
-du Schlauch
-klesrajhgfpö ertl joerft oigjn retöoito
-herfkjö ghöoiert jhorti `;
+let eingabe = prompt(`Wie alt bist du:`);
 
-console.log( 45 != "45");
+if (eingabe > mindestalter){
+    console.log(`Du bist alt genug mein lieber!`)
+}else if (eingabe == mindestalter){
+    console.log(`Du bist gerade 18 Jahre geworden mein lieber!`)
+}else {
+    console.log(`Zu jung kleiner!`);
+}
