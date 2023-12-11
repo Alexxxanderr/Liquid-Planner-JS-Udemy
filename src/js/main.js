@@ -1,48 +1,48 @@
 "use strict"
 
-let einnahmen = 0;
-let ausgaben = 0;
-let bilanz = 0;
+let einnahmen = 0,
+    ausgaben = 0,
+    bilanz = 0,
+    titel, typ, betrag, datum;
 
-let titel_1 = prompt("Titel:");
-let typ_1 = prompt("Typ (Einnahme oder Ausgabe)");
-let betrag_1 = parseInt(prompt("Betrag: (in Cent)"));
-let datum_1 = prompt("Datum (jjjj-mm-tt)");
+const eintrag_erfassen = function(){
+    titel = prompt("Titel:");
+    typ = prompt("Typ (Einnahme oder Ausgabe)");
+    betrag = parseInt(prompt("Betrag: (in Cent)"));
+    datum = prompt("Datum (jjjj-mm-tt)");
+};
 
-console.log(`Titel: ${titel_1},\nTyp: ${typ_1},\nBetrag: ${betrag_1}ct,\nDatum: ${datum_1}.`);
+const eintrag_ausgeben = function(titel, typ, betrag, datum){
+    console.log(`Titel: ${titel},\nTyp: ${typ},\nBetrag: ${betrag} ct,\nDatum: ${datum}.`);
+};
 
-if (typ_1 == "e"){
-    einnahmen = einnahmen + betrag_1;
-    bilanz = bilanz + betrag_1;
-}else if (typ_1 == "a"){
-    ausgaben = ausgaben + betrag_1;
-    bilanz = bilanz - betrag_1;
-}else {
-    console.log(`Der Typ "${typ_1}" ist nicht bekannt.`);
-}
-
-let titel_2 = prompt("Titel:");
-let typ_2 = prompt("Typ (Einnahme oder Ausgabe)");
-let betrag_2 = parseInt(prompt("Betrag: (in Cent)"));
-let datum_2 = prompt("Datum (jjjj-mm-tt)");
-
-console.log(`Titel: ${titel_2},\nTyp: ${typ_2},\nBetrag: ${betrag_2}ct,\nDatum: ${datum_2}.`);
-
-if (typ_2 == "e"){
-    einnahmen = einnahmen + betrag_2;
-    bilanz = bilanz + betrag_2;
-}else if (typ_2 == "a"){
-    ausgaben = ausgaben + betrag_2;
-    bilanz = bilanz - betrag_2;
-}else {
-    console.log(`Der Typ "${typ_2}" ist nicht bekannt.`);
-}
+const eintrag_mit_gesamtbilanz_verrechnen = function(typ, betrag){
+    if (typ == "e"){
+        einnahmen = einnahmen + betrag;
+        bilanz = bilanz + betrag;
+    }else if (typ == "a"){
+        ausgaben = ausgaben + betrag;
+        bilanz = bilanz - betrag;
+    }else {
+        console.log(`Der Typ "${typ}" ist nicht bekannt.`);
+    }
+};
 
 // Gesamtbilanz ausgeben
 
-let positiv = bilanz >= 0;
-
-console.log(`Einnahmen: ${einnahmen} ct
+const gesamtbilanz_ausgeben = function(einnahmen, ausgaben, bilanz){
+    console.log(`Einnahmen: ${einnahmen} ct
 Ausgaben: ${ausgaben} ct
 Bilanz: ${bilanz} ct
-Bilanz ist positiv: ${positiv}`);
+Bilanz ist positiv: ${bilanz >= 0}`);
+};
+
+const eintrag_hinzufuegen = function(){
+    eintrag_erfassen();
+    eintrag_ausgeben(titel, typ, betrag, datum);
+    eintrag_mit_gesamtbilanz_verrechnen(typ, betrag);
+    gesamtbilanz_ausgeben(einnahmen, ausgaben, bilanz);
+};
+
+eintrag_hinzufuegen();
+eintrag_hinzufuegen();
