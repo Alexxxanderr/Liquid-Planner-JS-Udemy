@@ -26,15 +26,31 @@ const haushaltsbuch = {
         console.log(`Titel: ${this.neuer_eintrag.titel},\nTyp: ${this.neuer_eintrag.typ},\nBetrag: ${this.neuer_eintrag.betrag} ct,\nDatum: ${this.neuer_eintrag.datum}.`);
     },
 
+    // eintrag_mit_gesamtbilanz_verrechnen(){
+    //     if (this.neuer_eintrag.typ == "e"){
+    //         this.gesamtbilanz.einnahmen += this.neuer_eintrag.betrag;
+    //         this.gesamtbilanz.bilanz += this.neuer_eintrag.betrag;
+    //     }else if (this.neuer_eintrag.typ == "a"){
+    //         this.gesamtbilanz.ausgaben += this.neuer_eintrag.betrag;
+    //         this.gesamtbilanz.bilanz -= this.neuer_eintrag.betrag;
+    //     }else {
+    //         console.log(`Der Typ "${this.neuer_eintrag.typ}" ist nicht bekannt.`);
+    //     }
+    // },
+
     eintrag_mit_gesamtbilanz_verrechnen(){
-        if (this.neuer_eintrag.typ == "e"){
-            this.gesamtbilanz.einnahmen += this.neuer_eintrag.betrag;
-            this.gesamtbilanz.bilanz += this.neuer_eintrag.betrag;
-        }else if (this.neuer_eintrag.typ == "a"){
-            this.gesamtbilanz.ausgaben += this.neuer_eintrag.betrag;
-            this.gesamtbilanz.bilanz -= this.neuer_eintrag.betrag;
-        }else {
-            console.log(`Der Typ "${this.neuer_eintrag.typ}" ist nicht bekannt.`);
+        switch (this.neuer_eintrag.typ){
+            case "e":
+                this.gesamtbilanz.einnahmen += this.neuer_eintrag.betrag;
+                this.gesamtbilanz.bilanz += this.neuer_eintrag.betrag;
+            break;
+            case "a":
+                this.gesamtbilanz.ausgaben += this.neuer_eintrag.betrag;
+                this.gesamtbilanz.bilanz -= this.neuer_eintrag.betrag;
+                break;
+            default: 
+                console.log(`Der Typ "${this.neuer_eintrag.typ}" ist nicht bekannt.`);
+                break;
         }
     },
 

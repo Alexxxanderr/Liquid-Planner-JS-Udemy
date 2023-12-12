@@ -1,52 +1,17 @@
 "use strict"
 
+let produkt = "Milch";
 
-let inhaber_1 = {
-    vorname: "Max",
-    nachname: "Mustermann",
-    geschlecht: "männlich",
-    alter: 18,
-    inhaber_2: {
-        vorname: "Micha",
-        nachname: "Muster",
-        geschlecht: "männlich",
-        alter: 19
-    },
-    kontostand: 5000,
-    aktiv: true,
-    einzahlen(e){
-        this.kontostand += e;
-    },
-    abheben(e){
-        this.kontostand -= e;
-    },
-    person_verarbeiten(){
-        return {
-            v: this.vorname + " ",
-            n: this.nachname + " ",
-            a: this.alter + " !"
-        }
-    }
-};
-
-console.log(inhaber_1.person_verarbeiten());
-
-let o1 = {
-    marke: "BMW",
-    modell: "6er Grande"
+switch (produkt){
+    case "Brot":
+        console.log("1,89€");
+        break;
+    case "Schokolade":
+    case "Chips": 
+        console.log("0,99€");
+        break;
+    case "Apfel":
+    case "Milch":
+        console.log("0,79€");
+        break;
 }
-
-let o2 = {
-    marke: "MB",
-    modell: "CLS 63"
-}
-
-const vergleich = function(a,b){
-    if (a.marke === b.marke){
-        console.log("Gleich.");
-    }else{
-        console.log("Ungleich!.");
-    }
-}
-
-vergleich(o1,o2);
