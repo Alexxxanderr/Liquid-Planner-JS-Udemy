@@ -1,47 +1,81 @@
 "use strict"
 
-// let waren = [
-//     {
-//         nukk: "Äpfel",
-//         eins: "Bannen",
-//         zwei: "Birnen"
-//     },
-//     {
-//         0: "Möhren",
-//         1: "Salerie",
-//         2: "Kohl"
-//     },
-//     {
-//         0: "Graubrot",
-//         1: "Schwarzbrot",
-//         2: "Vollkornbrot"
-//     }
+// let waren =  [
+//     "Äpfel",
+//     "Bannen",
+//     "Birnen",
+//     "Möhren",
+//     "Salerie",
+//     "Kohl",
+//     "Birnen",
+//     "Möhren",
+//     "Birnen",
+//     "Möhren"
 // ];
 
-// console.log(waren[0]["nukk"]);
-
-// waren[0].nukk = "Orangen";
-
-// console.log(waren[0]["nukk"]);
+// for (let i in waren){
+//     console.log(i);
+//     console.log(waren[i])
+// }
+// for (let e of waren){
+//     console.log(e);
+// }
 
 
 let waren2 = [
-
+    [
+        // [
+        //     "Affen",
+        //     "Bohnen",
+        //     "Hurensohn",
+        //     "MöhGurkenren",
+        //     "Schneggen",
+        //     "Kuh",
+        //     "Bär",
+        //     "Schneggen"
+        // ],
         "Äpfel",
         "Bannen",
         "Birnen",
         "Möhren",
         "Salerie",
+        "Kohl",
+        "Birnen",
+        "Möhren",
+        "Birnen",
+        "Möhren"
+    ],
+    [
+        "Affen",
+        "Bohnen",
+        "Huren",
+        "MöhGurkenren",
+        "Schnggen",
+        "Kuh"
+    ],
+    [
+        "Äpfel",
+        "Bannen",
+        "Birnen",
+        "Möhren",
+        "Salerie",
+        "Kohl",
         "Kohl"
+    ]
 ];
 
-console.log(waren2.includes("Möhren",4));
-console.log(waren2.indexOf("Möhren",5));
 
-let ads = waren2.indexOf("Möhren",4);
+let o1 = {
+    0: "null",
+    1: "eins",
+    2: "zwei",
+    der: "wert",
+    das: "noch",
+    3: "drei",
+    4: "vier"
+}
 
-if(ads === -1){
-    console.log("Es klappt!!!")
-}else{
-    console.log("Gefunden wurde: "+ads);
+
+for(let e of Object.values(o1)){
+    console.log(e);
 }
