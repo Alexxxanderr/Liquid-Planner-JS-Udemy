@@ -1,38 +1,123 @@
 "use strict"
 
-let zahlen = [12, 3, 20, 2, 66, 15, 20, 45, 37, 50];
+let mymap = new Map();
 
-zahlen.forEach(function(e){
-    if ([e] <= 20){
-        console.log(e);
-    }
+mymap.set("Test", "Wert des Tests");
+
+console.log(mymap);
+
+mymap.set(14, "Zahl");
+
+console.log(mymap);
+
+mymap.set([], "Arraywert");
+
+console.log(mymap);
+
+mymap.set(function(){}, "Funtionswert");
+
+console.log(mymap);
+
+mymap.set({}, "Objektwert");
+
+console.log(mymap + "\n--------------------------------");
+
+mymap.forEach(function(wert,eigen,map){
+    console.log(eigen);
+    console.log(wert);
+    // console.log(map);
+});
+
+console.log(mymap + "\n--------------------------------");
+
+
+for (let paar of mymap){
+    console.log(paar);
+};
+
+for (let [eigenschaft,wert] of mymap){
+    console.log(eigenschaft);
+    console.log(wert);
+};
+
+console.log("--------------------------------");
+
+for (let [eigenschaft, wert] of mymap.entries()){
+    console.log(eigenschaft);
+    console.log(wert);
+};
+
+console.log("--------------------------------");
+
+for (let eigenschaft of mymap.keys()){
+    console.log(eigenschaft);
+};
+
+for (let eigenschaft of mymap.values()){
+    console.log(eigenschaft);
+};
+
+
+
+
+console.log(mymap.get("Test"));
+console.log(mymap.get(14));
+console.log(mymap.get([]));
+console.log(mymap.get(function(){}));
+console.log(mymap.get({}));
+
+console.log(mymap.has("Test"));
+mymap.delete({});
+
+console.log(mymap);
+
+console.log(mymap.size);
+
+mymap.clear();
+
+console.log(mymap);
+
+let myset = new Set();
+
+console.log(myset);
+
+myset.add("Wert");
+myset.add("Wert");
+myset.add(14);
+myset.add([]);
+myset.add([]);
+myset.add(function(){});
+myset.add(function(){});
+myset.add({});
+myset.add({});
+
+console.log("------------------------------------------------------");
+
+myset.forEach(function(werte){
+    console.log(werte);
 });
 
 
-let kleinerAls20 = zahlen.filter(function(e){
-    if(e <= 20){
-        return true;
-    } else {
-        return false;
-    }
-});
+console.log("------------------------------------------------------");
 
-console.log(kleinerAls20);
-
-let Zahlen = [1, 20, 2000, 1000000, 50];
-
-console.log(Zahlen);
-
-Zahlen.sort(function(a, b){
-    return a - b;
-});
-
-console.log("Hier: " + Zahlen);
+for (let wert of myset){
+    console.log(wert);
+};
 
 
+console.log(myset.has(14));
+console.log(myset.has({}));
+console.log(myset.has(7+7));
 
-let woerter = ["Monkey",  "Affe", "Zebra", "Schlange", "Giraffe"];
+myset.clear();
+console.log(myset.size);
 
-woerter.sort();
+console.log("------------------------------------------------------");
 
-console.log(woerter);
+
+for (let eigenschaft of myset.values()){
+    console.log(eigenschaft);
+};
+
+
+
