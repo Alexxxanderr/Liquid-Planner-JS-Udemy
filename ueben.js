@@ -1,81 +1,38 @@
 "use strict"
 
-// let waren =  [
-//     "Äpfel",
-//     "Bannen",
-//     "Birnen",
-//     "Möhren",
-//     "Salerie",
-//     "Kohl",
-//     "Birnen",
-//     "Möhren",
-//     "Birnen",
-//     "Möhren"
-// ];
+let zahlen = [12, 3, 20, 2, 66, 15, 20, 45, 37, 50];
 
-// for (let i in waren){
-//     console.log(i);
-//     console.log(waren[i])
-// }
-// for (let e of waren){
-//     console.log(e);
-// }
+zahlen.forEach(function(e){
+    if ([e] <= 20){
+        console.log(e);
+    }
+});
 
 
-let waren2 = [
-    [
-        // [
-        //     "Affen",
-        //     "Bohnen",
-        //     "Hurensohn",
-        //     "MöhGurkenren",
-        //     "Schneggen",
-        //     "Kuh",
-        //     "Bär",
-        //     "Schneggen"
-        // ],
-        "Äpfel",
-        "Bannen",
-        "Birnen",
-        "Möhren",
-        "Salerie",
-        "Kohl",
-        "Birnen",
-        "Möhren",
-        "Birnen",
-        "Möhren"
-    ],
-    [
-        "Affen",
-        "Bohnen",
-        "Huren",
-        "MöhGurkenren",
-        "Schnggen",
-        "Kuh"
-    ],
-    [
-        "Äpfel",
-        "Bannen",
-        "Birnen",
-        "Möhren",
-        "Salerie",
-        "Kohl",
-        "Kohl"
-    ]
-];
+let kleinerAls20 = zahlen.filter(function(e){
+    if(e <= 20){
+        return true;
+    } else {
+        return false;
+    }
+});
+
+console.log(kleinerAls20);
+
+let Zahlen = [1, 20, 2000, 1000000, 50];
+
+console.log(Zahlen);
+
+Zahlen.sort(function(a, b){
+    return a - b;
+});
+
+console.log("Hier: " + Zahlen);
 
 
-let o1 = {
-    0: "null",
-    1: "eins",
-    2: "zwei",
-    der: "wert",
-    das: "noch",
-    3: "drei",
-    4: "vier"
-}
 
+let woerter = ["Monkey",  "Affe", "Zebra", "Schlange", "Giraffe"];
 
-for(let e of Object.values(o1)){
-    console.log(e);
-}
+woerter.sort();
+
+console.log(woerter);
