@@ -8,10 +8,12 @@ const haushaltsbuch = {
 
     eintrag_erfassen(){
         let neuer_eintrag = new Map();
+               
         neuer_eintrag.set("titel", prompt("Titel:"));
         neuer_eintrag.set("typ", prompt("Typ (Einnahme oder Ausgabe)"));
         neuer_eintrag.set("betrag", parseInt(prompt("Betrag: (in Cent)")));
-        neuer_eintrag.set("datum", prompt("Datum (jjjj-mm-tt)"));
+        neuer_eintrag.set("datum", new Date(prompt("Datum: ")));
+        neuer_eintrag.set("id", Date.now());
         this.eintraege.push(neuer_eintrag);
 
         // this.gesamtbilanz.set("titel", prompt("Titel:"));
@@ -36,7 +38,11 @@ const haushaltsbuch = {
     eintraege_ausgeben(){
         console.clear();
         this.eintraege.forEach(function(eintrag){
-            console.log(`Titel: ${eintrag.get("titel")},\nTyp: ${eintrag.get("typ")},\nBetrag: ${eintrag.get("betrag")} ct,\nDatum: ${eintrag.get("datum")}.`);
+            console.log(`Titel: ${eintrag.get("titel")},\nTyp: ${eintrag.get("typ")},\nBetrag: ${eintrag.get("betrag")} ct,\nDatum: ${eintrag.get("datum").toLocaleString("de-DE", {
+                year: "numeric",
+                month: "numeric",
+                day: "numeric",
+                })}.`);
         });
     },
 
