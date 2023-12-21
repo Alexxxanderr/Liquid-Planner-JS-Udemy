@@ -6,21 +6,96 @@ const haushaltsbuch = {
 
     eintraege: [],
 
-    eintrag_erfassen(){
-        let neuer_eintrag = new Map();
-               
-        neuer_eintrag.set("titel", prompt("Titel:"));
-        neuer_eintrag.set("typ", prompt("Typ (Einnahme oder Ausgabe)"));
-        neuer_eintrag.set("betrag", parseInt(prompt("Betrag: (in Cent)")));
-        neuer_eintrag.set("datum", new Date(prompt("Datum: ")));
-        neuer_eintrag.set("id", Date.now());
-        this.eintraege.push(neuer_eintrag);
+    fehler: [],
 
-        // this.gesamtbilanz.set("titel", prompt("Titel:"));
-        // this.gesamtbilanz.set("typ", prompt("Typ (Einnahme oder Ausgabe)"));
-        // this.gesamtbilanz.set("betrag", parseInt(prompt("Betrag: (in Cent)")));
-        // this.gesamtbilanz.set("datum", prompt("Datum (jjjj-mm-tt)"));
-        // this.eintraege.push(this.gesamtbilanz);
+    eintrag_erfassen(){
+        let neuer_eintrag = new Map();      
+        neuer_eintrag.set("titel", this.titel_verarbeiten(prompt("Titel:")));
+        neuer_eintrag.set("typ", this.typ_verarbeiten(prompt("Typ (Einnahme oder Ausgabe)")));
+        neuer_eintrag.set("betrag", this.betrag_verarbeiten(prompt("Betrag: (in €)")));
+        neuer_eintrag.set("datum", this.datum_verarbeiten(prompt("Datum: ")));
+        neuer_eintrag.set("id", Date.now());
+        if (this.fehler.length !== 0){
+            console.log("Ihre Eingaben enthalten Fehler:");
+            this.fehler.forEach(function(f) {
+                console.log(f);
+            });
+        } else {
+            this.eintraege.push(neuer_eintrag);
+        }
+
+    },
+
+    fehler_ausgeben(){
+
+    },
+
+    typ_validieren(typ){
+        if( typ.match(/^(?:e|a)$/) !== null){
+            return true;
+        } else {
+            return false;
+        }
+    },
+
+    typ_verarbeiten(typ){
+        typ = typ.trim().toLowerCase();
+        if (this.typ_validieren(typ)){
+            return typ;
+        }else {
+            this.fehler.push("Der Typ ist ungültig!");
+        }  
+    },
+
+    titel_validieren(titel){
+        if( titel !== ""){
+            return true;
+        } else {
+            return false;
+        }
+    },
+
+    titel_verarbeiten(titel){
+        titel = titel.trim();
+        if (this.titel_validieren(titel)){
+            return titel;
+        }else {
+            this.fehler.push("Der Titel wurde nicht angegeben!");
+        }  
+    },
+
+    datum_validieren(datum){
+        if( datum.match(/^\d{4}(?:-)\d{2}(?:-)\d{2}$/) !== null){
+            return true;
+        } else {
+            return false;
+        }
+    },
+
+    datum_verarbeiten(datum){
+        datum = datum.trim();
+        if (this.datum_validieren(datum)){
+            return new Date(datum);
+        }else {
+            this.fehler.push("Das Datumsformat ist unbekannt!");
+        }  
+    },
+
+    betrag_validieren(betrag){
+        if( betrag.match(/^\d+(?:(?:,|\.)\d\d?)?$/) !== null){
+            return true;
+        } else {
+            return false;
+        }
+    },
+
+    betrag_verarbeiten(betrag){
+        betrag = betrag.trim();
+        if (this.betrag_validieren(betrag)){
+            return parseFloat(betrag.replace(/,/, ".")) * 100;
+        }else {
+            this.fehler.push("Der Typ Betrag ist unbekannt!");
+        }  
     },
 
     eintraege_sortieren(){
@@ -38,7 +113,7 @@ const haushaltsbuch = {
     eintraege_ausgeben(){
         console.clear();
         this.eintraege.forEach(function(eintrag){
-            console.log(`Titel: ${eintrag.get("titel")},\nTyp: ${eintrag.get("typ")},\nBetrag: ${eintrag.get("betrag")} ct,\nDatum: ${eintrag.get("datum").toLocaleString("de-DE", {
+            console.log(`Titel: ${eintrag.get("titel")},\nTyp: ${eintrag.get("typ")},\nBetrag: ${(eintrag.get("betrag")/100).toFixed(2)} €,\nDatum: ${eintrag.get("datum").toLocaleString("de-DE", {
                 year: "numeric",
                 month: "numeric",
                 day: "numeric",
@@ -72,9 +147,9 @@ const haushaltsbuch = {
     },
 
     gesamtbilanz_ausgeben(){
-        console.log(`Einnahmen: ${this.gesamtbilanz.get("einnahmen")} ct\n`
-            + `Ausgaben: ${this.gesamtbilanz.get("ausgaben")} ct\n`
-            + `Bilanz: ${this.gesamtbilanz.get("bilanz")} ct\n`
+        console.log(`Einnahmen: ${(this.gesamtbilanz.get("einnahmen")/100).toFixed(2)} €\n`
+            + `Ausgaben: ${(this.gesamtbilanz.get("ausgaben")/100).toFixed(2)} €\n`
+            + `Bilanz: ${(this.gesamtbilanz.get("bilanz")/100).toFixed(2)} €\n`
             + `Bilanz ist positiv: ${this.gesamtbilanz.get("bilanz") >= 0}`);
     },
 
@@ -82,10 +157,14 @@ const haushaltsbuch = {
         let weiterer_eintrag = true;
         while (weiterer_eintrag == true) {
             this.eintrag_erfassen();
-            this.eintraege_sortieren();
-            this.eintraege_ausgeben();
-            this.gesamtbilanz_erstellen();
-            this.gesamtbilanz_ausgeben();
+            if(this.fehler.length == 0){
+                this.eintraege_sortieren();
+                this.eintraege_ausgeben();
+                this.gesamtbilanz_erstellen();
+                this.gesamtbilanz_ausgeben();
+            } else {
+                this.fehler = [];
+            }
             weiterer_eintrag = confirm("Noch ein Eintrag?");
         }
         

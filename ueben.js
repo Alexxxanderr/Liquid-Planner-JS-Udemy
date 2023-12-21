@@ -1,35 +1,35 @@
 "use strict"
 
-let datum = new Date();
+// let s = " Lorem ipsum, dolor sit amet ipsum. ";
 
-// console.log(datum.toLocaleString());
+// console.log(s.length);
+// console.log(s.indexOf("ipsum", 20));
+// console.log(s.lastIndexOf("ipsum"));
+// console.log(s.includes("amet", 25));
+// console.log(s.toLocaleLowerCase());
+// console.log(s.toLocaleUpperCase());
+// console.log(s.trim());
+// console.log(s.repeat(5));
 
-let options = {
-    year: "numeric",
-    month: "numeric",
-    day: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-    second: "2-digit"
-    }
+// let reg = /i\w{4}/g;
 
-let de = datum.toLocaleString("de-DE", options);
+// console.log(s.search(reg));
+// console.log(s.replace(reg, "Opsunar--------------"));
+// console.log(s.replace(/,/, "....."));
+// console.log(s.replace(",", "..."));
 
-console.log("Es ist der " + de + " Uhr");
+// console.log(s.match(reg));
 
-const uhrzeit = function(){
-    let d = new Date();
-    d.getTime();
-    return d
-};
-setInterval(function(){
-    let das = uhrzeit();
-    document.getElementById('bodyy').innerHTML = das;
-    
-}, 1000);
+// let zahl = Math;
+// zahl = zahl.random()*10;
 
+// console.log(Math.ceil(zahl));
+
+// console.log( isNaN(typ));
 
 
+let fehler = [];
 
+fehler.push("sdes");
 
-
+console.log(fehler.length);
