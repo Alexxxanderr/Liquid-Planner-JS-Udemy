@@ -17,16 +17,10 @@ const haushaltsbuch = {
         neuer_eintrag.set("id", Date.now());
         if (this.fehler.length !== 0){
             console.log("Ihre Eingaben enthalten Fehler:");
-            this.fehler.forEach(function(f) {
-                console.log(f);
-            });
+            this.fehler.forEach((f) => console.log(f));
         } else {
             this.eintraege.push(neuer_eintrag);
         }
-
-    },
-
-    fehler_ausgeben(){
 
     },
 
@@ -39,6 +33,7 @@ const haushaltsbuch = {
     },
 
     typ_verarbeiten(typ){
+        if(typ == null) {typ = " ";}
         typ = typ.trim().toLowerCase();
         if (this.typ_validieren(typ)){
             return typ;
@@ -56,6 +51,7 @@ const haushaltsbuch = {
     },
 
     titel_verarbeiten(titel){
+        if(titel == null) {titel = " ";}
         titel = titel.trim();
         if (this.titel_validieren(titel)){
             return titel;
@@ -73,6 +69,7 @@ const haushaltsbuch = {
     },
 
     datum_verarbeiten(datum){
+        if(datum == null) {datum = " ";}
         datum = datum.trim();
         if (this.datum_validieren(datum)){
             return new Date(datum);
@@ -90,6 +87,7 @@ const haushaltsbuch = {
     },
 
     betrag_verarbeiten(betrag){
+        if(betrag == null) {betrag = " ";}
         betrag = betrag.trim();
         if (this.betrag_validieren(betrag)){
             return parseFloat(betrag.replace(/,/, ".")) * 100;
@@ -99,7 +97,7 @@ const haushaltsbuch = {
     },
 
     eintraege_sortieren(){
-        this.eintraege.sort(function(a, b){
+        this.eintraege.sort((a, b) => {
             if (a.get("datum") > b.get("datum")){
                 return -1;
             } else if (a.get("datum") < b.get("datum")){
@@ -112,7 +110,7 @@ const haushaltsbuch = {
 
     eintraege_ausgeben(){
         console.clear();
-        this.eintraege.forEach(function(eintrag){
+        this.eintraege.forEach((eintrag) => {
             console.log(`Titel: ${eintrag.get("titel")},\nTyp: ${eintrag.get("typ")},\nBetrag: ${(eintrag.get("betrag")/100).toFixed(2)} €,\nDatum: ${eintrag.get("datum").toLocaleString("de-DE", {
                 year: "numeric",
                 month: "numeric",
@@ -161,14 +159,13 @@ const haushaltsbuch = {
     },
 
     eintraege_anzeigen(){
-        document.querySelectorAll(".monatsliste ul").forEach(e => {
-            e.remove();
-        });
+        document.querySelectorAll(".monatsliste ul").forEach(e => e.remove());
         let eintragsliste = document.createElement("ul");
-
-        for (let eintrag of this.eintraege){
+        
+        this.eintraege.forEach(eintrag => {
             eintragsliste.insertAdjacentElement("beforeend",  this.html_eintrag_generieren(eintrag));
-        };
+        });
+
         document.querySelector(".monatsliste").insertAdjacentElement("afterbegin", eintragsliste);
     },
 
@@ -179,7 +176,7 @@ const haushaltsbuch = {
         neue_gesamtbilanz.set("ausgaben", 0);
         neue_gesamtbilanz.set("bilanz", 0);        
 
-        this.eintraege.forEach(function(eintrag){
+        this.eintraege.forEach((eintrag) => {
             switch (eintrag.get("typ")){
                 case "einnahme":
                     neue_gesamtbilanz.set("einnahmen", neue_gesamtbilanz.get("einnahmen") + eintrag.get("betrag"));
@@ -212,7 +209,7 @@ const haushaltsbuch = {
         einnahmenTitel.textContent = "Einnahmen:";
         einnahmenZeile.insertAdjacentElement("afterbegin", einnahmenTitel);
         let einnahmenBetrag = document.createElement("span");
-        einnahmenBetrag.textContent = (this.gesamtbilanz.get("einnahmen")/100).toFixed(2).replace(/\./, "," + "€");
+        einnahmenBetrag.textContent = (this.gesamtbilanz.get("einnahmen")/100).toFixed(2).replace(/\./, ",")+ " €";
         einnahmenZeile.insertAdjacentElement("beforeend", einnahmenBetrag);
         gesamtbilanz.insertAdjacentElement("beforeend", einnahmenZeile);
 
@@ -222,7 +219,7 @@ const haushaltsbuch = {
         ausgabenTitel.textContent = "Ausgaben:";
         ausgabenZeile.insertAdjacentElement("afterbegin", ausgabenTitel);
         let ausgabenBetrag = document.createElement("span");
-        ausgabenBetrag.textContent = (this.gesamtbilanz.get("ausgaben")/100).toFixed(2).replace(/\./, "," + "€");
+        ausgabenBetrag.textContent = (this.gesamtbilanz.get("ausgaben")/100).toFixed(2).replace(/\./, ",") + " €";
         ausgabenZeile.insertAdjacentElement("beforeend", ausgabenBetrag);
         gesamtbilanz.insertAdjacentElement("beforeend", ausgabenZeile);
 
@@ -237,7 +234,7 @@ const haushaltsbuch = {
         } else if (this.gesamtbilanz.get("bilanz") < 0){
             bilanzBetrag.setAttribute("class", "negativ");
         };
-        bilanzBetrag.textContent = (this.gesamtbilanz.get("bilanz")/100).toFixed(2).replace(/\./, "," + "€");
+        bilanzBetrag.textContent = (this.gesamtbilanz.get("bilanz")/100).toFixed(2).replace(/\./, ",") + " €";
         bilanzZeile.insertAdjacentElement("beforeend", bilanzBetrag);
         gesamtbilanz.insertAdjacentElement("beforeend", bilanzZeile);
 
