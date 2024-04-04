@@ -83,3 +83,9 @@ hr {
 .jumbotron > header > p {
     font-size: 1.25rem;
 }
+
+input {
+    display: block;
+    width: 100%;
+    margin-bottom: 1rem;
+}
