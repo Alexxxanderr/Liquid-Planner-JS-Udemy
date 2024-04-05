@@ -1,145 +1,112 @@
 "use strict"
 
-// let jumbo = document.querySelector(".jumbotron");
+//Bedingter ternärer Operator 
+//Syntax:  Bedingung ? Ausdruck_1 : Ausdruck_2
 
-// jumbo.addEventListener("click", e => {
-//     console.log(e);
-//     console.log(e.clientX);
-//     console.log(e.clientY);
-//     console.log(e.target);
-//     console.log(e.screenX);
-// });
+// let zahl = 1;
 
-// jumbo.addEventListener("dblclick", e => {
-//     console.log(e);
-//     alert("Doppelklick");
-// });
+// console.log(zahl > 10 ? "größer als 10" : "Kleiner als 10");
 
-// jumbo.addEventListener("mousedown", e => {
-//     console.log(e);
-//     alert("Maus runter");
-// });
+// let geschlecht = 0;
+// console.log(`Hallo ${geschlecht ? "Herr" : "Frau"} Mustermann`);
 
-// jumbo.addEventListener("mouseup", e => {
-//     console.log(e);
-//     alert("Maus hoch");
-// });
+// if (geschlecht){
+//     console.log("Hallo Herr Mustermann");
+// }else{
+//     console.log("Hallo Frau Mustermann");
+// }
 
-// jumbo.addEventListener("mouseover", e => {
-//     console.log(e);
-//     alert("Maus over");
-// });
+// let fueherschein = true;
 
-// jumbo.addEventListener("mouseout", e => {
-//     console.log(e);
-//     alert("Maus out");
-// });
+// const fuehrerscheinKontrolle = function(){
+//     if (fueherschein){
+//         return "Darf Auto fahren!";
+//     }else{
+//         return "Darf kein Auto fahren";
+//     }
+// };
 
-// let body = document.querySelector("body");
-// body.addEventListener("click", e => console.log("davor der Event"));
+// function fuehrerscheinKontrolle () {
+//     return fueherschein ? "Darf Auto fahren!" : "Darf kein Auto fahren!"
+// }
 
+// console.log(fuehrerscheinKontrolle());
 
-// let el1 = document.querySelector("#navigation  ul > li:nth-of-type(1) a");
-// let el1Parent = el1.parentElement;
-// let el2 = document.querySelector("#navigation  ul > li:nth-of-type(2) a");
-// let el2Parent = el2.parentElement;
+// let erdbeschleunigung = 5.2;
+// let panik = false;
 
-// el1.addEventListener("click", e => {
-//     e.preventDefault();
-//     console.log("el1 mitbekommen");
-// });
+// erdbeschleunigung > 9.81 ? (panik = true, erdbeschleunigung = 9.81) : (panik = false, erdbeschleunigung = 9.81);
 
-// el1Parent.addEventListener("click", e => {
-//     console.log("el1Parent mitbekommen");
-// });
+// console.log(erdbeschleunigung);
+// console.log(panik);
 
-// el2.addEventListener("click", e => {
-//     e.preventDefault();
-//     e.stopImmediatePropagation();
-//     console.log("el2 mitbekommen");
-// });
+// let farbe = "rot";
 
-// el2Parent.addEventListener("click", e => {
-//     console.log("el2Parent mitbekommen");
-// });
+// if (farbe === "rot"){
+//     console.log("Ich mag rot!");
+// } else if (farbe === "blau"){
+//     console.log("Ich mag auch blau!");
+// } else if (farbe === "grün"){
+//     console.log("Ich mag nicht grün!");
+// } else {
+//     console.log(`Zur ${farbe} habe ich keine Meinung!`);
+// }
 
-// document.addEventListener("keydown", e => {
-//     document.querySelector("h2").innerHTML = e.key;
-//     document.querySelector("h2").innerHTML = e.code;
-//     console.log(e);
-
-// });
-
-// document.addEventListener("keyup", e => {
-//     document.querySelector("h2").innerHTML = e.key;
-//     document.querySelector("h2").innerHTML = e.code;
-//     console.log(e);
-
-// });
-
-// document.addEventListener("keypress", e => {
-//     document.querySelector("h2").innerHTML = e.key;
-//     document.querySelector("h2").innerHTML = e.code;
-//     console.log(e);
-
-// });
-
-// let formular = document.querySelector("form");
-
-// formular.addEventListener("submit", e => {
-//     e.preventDefault();
-//     console.log(e);
-// });
-
-// formular.addEventListener("reset", e => console.log(e));
-
-// let input = document.querySelector("input[type=text]");
-// input.addEventListener("input", e => console.log(e));
-// input.addEventListener("change", e => { console.log(e)});
-
-// let textarea = document.querySelector("textarea");
-// textarea.addEventListener("input", e => console.log(e));
-// textarea.addEventListener("change", e => { console.log(e)});
-
-// let checkboxen = document.querySelectorAll("input[type=checkbox]");
-// checkboxen.forEach(el => {
-//     el.addEventListener("change", e => {
-//         console.log(e);
-//         console.log(e.target.checked);
-//     })
-// });
-
-// let radiobuttons = document.querySelectorAll("input[type=radio]");
-// radiobuttons.forEach(el => {
-//     el.addEventListener("change", e => {
-//         console.log(e);
-//         console.log(e.target.value);
-//     })
-// });
-
-// let range = document.querySelector("input[type=range");
-// range.addEventListener("change", e => {
-//     console.log(e);
-//     console.log(e.target.value);
-// });
-
-// window.addEventListener("resize", e => console.log(e.target.innerHeight));
-// window.addEventListener("scroll", e => {
-//     console.log(e);
-//     console.log(scrollX);
-//     console.log(scrollY);
-// });
-
-// window.addEventListener("load", e => console.log(e));
-
-// let link = document.querySelector("a.active");
-// let input = document.querySelector("input[type=text]");
-// let formular = document.querySelector("form");
-
-// setTimeout(() => link.click(), 2000); 
-// setTimeout(() => input.focus(), 3000); 
-// setTimeout(() => input.blur(), 6000); 
-// setTimeout(() => formular.reset(), 9000);
-// setTimeout(() => formular.submit(), 12000); 
+// console.log(farbe === "rot" ? "Ich mag rot!" : farbe === "blau" ? "Ich mag auch blau!" : farbe === "grün" ? "Ich mag nicht grün!" : `Zur ${farbe} habe ich keine Meinung!`)
 
 
+// für Funktionen
+// let meine_zahlen = [44, 51, 36];
+// const addieren = function(a, b, c) {
+//     console.log(a + b + c);
+// };
+// addieren(meine_zahlen[0], meine_zahlen[1], meine_zahlen[2]);
+// addieren(...meine_zahlen);
+
+// für Arrays
+// let kleines_array = ["Apfel", "Banane", "Kiwi", "Pflaumen", "Birnen"];
+// let grosses_array = [kleines_array[0], kleines_array[1], kleines_array[2], "Orange", "Weintraube"];
+// let grosses_array = [...kleines_array, "Orange", "Weintraube"];
+// let sehr_grosses_array = [...kleines_array, "Kartoffel", ...grosses_array, "Möhre"];
+// console.log(grosses_array);
+// console.log(sehr_grosses_array);
+
+// für Objekte
+// let kleines_objekt = {
+//     name: "Ein Objekt",
+//     groesse: 2,
+//     objekt: true
+// };
+// let grosses_objekt = {
+//     betreff: "Spread-Syntax",
+//     ...kleines_objekt,
+//     datum: new Date()
+// };
+// console.log(grosses_objekt);
+
+// für Instanzen von Objekten
+// let datumswerte = [2020, 5, 14];
+// let datum = new Date(datumswerte[0], datumswerte[1], datumswerte[2]);
+// let datum = new Date(...datumswerte);
+// console.log(datum);
+
+// const addieren = function(array) {
+//     let summe = 0;
+//     array.forEach(e => summe += e);
+//     return summe;
+// };
+// console.log(addieren([23, 23, 41, 64, 9, 109]));
+
+// const addieren = function(...summanden) {
+//     let summe = 0;
+//     summanden.forEach(e => summe += e);
+//     return summe;
+// };
+// console.log(addieren(23, 23, 41, 64, 9, 109));
+
+// const personen_addieren = function(name_1, name_2, ...punkte) {
+//     let summe = 0;
+//     punkte.forEach(e => summe += e);
+//     return `${name_1} und ${name_2} haben zusammen ${summe} gesammeln!`;
+// };
+// console.log(personen_addieren("Jan", "Mona", 56, 89, 13, 67, 98, 100, 156, 76));

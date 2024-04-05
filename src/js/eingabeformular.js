@@ -8,23 +8,14 @@ const eingabeformular = {
             titel: e.target[0].value,
             betrag: e.target[3].value,
             einnahme: e.target[1].checked,
-            ausgabe: e.target[2].checked,
             datum: e.target[4].valueAsDate
         }
     },
 
     formularDatenVerarbeiten(formulardaten){
-
-        let typ;
-        if (formulardaten.einnahme === true){
-            typ = "einnahme";
-        } else if (formulardaten.ausgabe === true){
-            typ = "ausgabe"
-        }
-
         return {
             titel: formulardaten.titel.trim(),
-            typ: typ,
+            typ: formulardaten.einnahme === false ? "ausgabe" : "einnahme",
             betrag: parseFloat(formulardaten.betrag) * 100,
             datum: formulardaten.datum,
         }
@@ -32,25 +23,16 @@ const eingabeformular = {
 
     formularDatenValidieren(formulardaten){
         let fehler = []; 
-        
         if (formulardaten.titel === ""){
             fehler.push("Der Titel wurde nicht angegeben!");
         }
-
-        if( formulardaten.typ === undefined || formulardaten.typ.match(/^(?:einnahme|ausgabe)$/) === null){
-            fehler.push("Der Typ ist ungültig!");
-        }
-        
         if (isNaN(formulardaten.betrag) === true){
             fehler.push("Der Typ Betrag ist unbekannt!");
         }
-
         if (formulardaten.datum === null){
             fehler.push("Das Datumsformat ist unbekannt!");
         }
-
         return fehler;
-
     },
     
     datumAktualisieren(){
@@ -151,13 +133,12 @@ const eingabeformular = {
 
     anzeigen(){
         let nav = document.querySelector("#navigationsleiste");
-        nav.insertAdjacentElement("afterend", this.html_generieren());
-        this.datumAktualisieren();
+        if (nav !== null){
+            nav.insertAdjacentElement("afterend", this.html_generieren());
+            this.datumAktualisieren();
+        }
     }
 
 };
 
 eingabeformular.anzeigen();
-
-
-

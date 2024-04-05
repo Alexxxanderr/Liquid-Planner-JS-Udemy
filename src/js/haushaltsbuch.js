@@ -37,13 +37,7 @@ const haushaltsbuch = {
 
     eintraege_sortieren(){
         this.eintraege.sort((a, b) => {
-            if (a.get("datum") > b.get("datum")){
-                return -1;
-            } else if (a.get("datum") < b.get("datum")){
-                return 1;
-            } else {
-                return 0;
-            }
+            return a.get("datum") > b.get("datum") ? -1 : a.get("datum") < b.get("datum") ? 1 : 0;
         });
     },
 
@@ -101,8 +95,11 @@ const haushaltsbuch = {
 
     eintragEntfernenEventHinzufuegen(listenpunkt){
         listenpunkt.querySelector(".entfernen-button").addEventListener("click", e => {
-            let timestamp = e.target.parentElement.getAttribute("data-timestamp");
-            this.eintragEntfernen(timestamp);
+            let loeschen = confirm("Sicher, dass du löschen willst?");
+            if (loeschen){
+                let timestamp = e.target.parentElement.getAttribute("data-timestamp");
+                this.eintragEntfernen(timestamp);
+            }
         });
     },
 
@@ -110,10 +107,7 @@ const haushaltsbuch = {
         document.querySelectorAll(".monatsliste ul").forEach(e => e.remove());
         let eintragsliste = document.createElement("ul");
         
-        this.eintraege.forEach(eintrag => {
-            eintragsliste.insertAdjacentElement("beforeend",  this.html_eintrag_generieren(eintrag));
-        });
-
+        this.eintraege.forEach(eintrag => { eintragsliste.insertAdjacentElement("beforeend",  this.html_eintrag_generieren(eintrag)); });
         document.querySelector(".monatsliste").insertAdjacentElement("afterbegin", eintragsliste);
     },
 
@@ -177,11 +171,7 @@ const haushaltsbuch = {
         bilanzTitel.textContent = "Bilanz:";
         bilanzZeile.insertAdjacentElement("afterbegin", bilanzTitel);
         let bilanzBetrag = document.createElement("span");
-        if (this.gesamtbilanz.get("bilanz") >= 0){
-            bilanzBetrag.setAttribute("class", "positiv");
-        } else if (this.gesamtbilanz.get("bilanz") < 0){
-            bilanzBetrag.setAttribute("class", "negativ");
-        };
+        this.gesamtbilanz.get("bilanz") >= 0 ? bilanzBetrag.setAttribute("class", "positiv") : bilanzBetrag.setAttribute("class", "negativ");
         bilanzBetrag.textContent = (this.gesamtbilanz.get("bilanz")/100).toFixed(2).replace(/\./, ",") + " €";
         bilanzZeile.insertAdjacentElement("beforeend", bilanzBetrag);
         gesamtbilanz.insertAdjacentElement("beforeend", bilanzZeile);
@@ -193,9 +183,7 @@ const haushaltsbuch = {
     gesamtbilanz_anzeigen(){
         let gesamtbilanz = document.querySelector("#gesamtbilanz");
         gesamtbilanz.remove();
-
         document.querySelector("body").insertAdjacentElement("beforeend", this.html_gesamtbilanz_generieren());
-        
     },
         
 }
