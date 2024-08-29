@@ -1,8 +1,12 @@
 "use strict"
 
-const eingabeformular = {
+class Eingabeformular {
 
-    formulardatenHolen(e) {
+    constructor() {
+        this._html = this._html_generieren();
+    }
+
+    _formulardatenHolen(e) {
 
         return {
             titel: e.target[0].value,
@@ -10,18 +14,18 @@ const eingabeformular = {
             einnahme: e.target[1].checked,
             datum: e.target[4].valueAsDate
         }
-    },
+    }
 
-    formularDatenVerarbeiten(formulardaten){
+    _formularDatenVerarbeiten(formulardaten){
         return {
             titel: formulardaten.titel.trim(),
             typ: formulardaten.einnahme === false ? "ausgabe" : "einnahme",
             betrag: parseFloat(formulardaten.betrag) * 100,
             datum: formulardaten.datum,
         }
-    },
+    }
 
-    formularDatenValidieren(formulardaten){
+    _formularDatenValidieren(formulardaten){
         let fehler = []; 
         if (formulardaten.titel === ""){
             fehler.push("Der Titel wurde nicht angegeben!");
@@ -33,70 +37,40 @@ const eingabeformular = {
             fehler.push("Das Datumsformat ist unbekannt!");
         }
         return fehler;
-    },
+    }
     
-    datumAktualisieren(){
+    _datumAktualisieren(){
         let datumInput = document.querySelector("#datum");
         if (datumInput !== null){
             datumInput.valueAsDate = new Date();
         }
-    },
+    }
 
-    absendeEventHinzufuegen(eingabeformular){
+    _absendeEventHinzufuegen(eingabeformular){
         eingabeformular.querySelector("#eingabeformular").addEventListener("submit", e => {
             e.preventDefault();
-            let formulardaten = this.formularDatenVerarbeiten(this.formulardatenHolen(e));
-            let formularFehler = this.formularDatenValidieren(formulardaten);
+            let formulardaten = this._formularDatenVerarbeiten(this._formulardatenHolen(e));
+            let formularFehler = this._formularDatenValidieren(formulardaten);
             if(formularFehler.length === 0){
                 haushaltsbuch.eintrag_hinzufuegen(formulardaten);
-                this.fehlerBoxEntfernen();
+                this._fehlerEntfernen();
                 e.target.reset(); 
-                this.datumAktualisieren();
+                this._datumAktualisieren();
             }else { 
-                this.fehlerBoxEntfernen();
-                this.fehlerBoxAnzeigen(formularFehler);
+                let fehler = new Fehler("Folgende Felder wurden nicht korrekt ausgefüllt!", formularFehler);
+                fehler.anzeigen();
             } 
         });
-    },
+    }
 
-    htmlFehlerboxGenerieren(formularFehler){
-
-        let fehlerbox = document.createElement("div");
-        fehlerbox.setAttribute("class", "fehlerbox");
-        
-        let fehlertext = document.createElement("span");
-        fehlertext.textContent = "Folgende Felder wurden nicht korrekt ausgefüllt:";
-        fehlerbox.insertAdjacentElement("afterbegin", fehlertext);
-
-        let fehlerliste = document.createElement("ul");
-        formularFehler.forEach(e => {
-            let fehlerlistenpunkt = document.createElement("li")
-            fehlerlistenpunkt.textContent = e;
-            fehlerliste.insertAdjacentElement("beforeend", fehlerlistenpunkt);
-        });
-
-        fehlerbox.insertAdjacentElement("beforeend", fehlerliste);
-
-        return fehlerbox;
-    },
-
-    fehlerBoxAnzeigen(formularFehler){
-
-        let eingabeformular = document.querySelector("#eingabeformular");
-        if (eingabeformular !== null) {
-            eingabeformular.insertAdjacentElement("afterbegin", this.htmlFehlerboxGenerieren(formularFehler));
-        }
-    },
-
-    fehlerBoxEntfernen(){
+    _fehlerEntfernen() {
         let bestehendeFehlerbox = document.querySelector(".fehlerbox");
         if (bestehendeFehlerbox !== null){
             bestehendeFehlerbox.remove();
         }
-    },
+    }
 
-
-    html_generieren(){
+    _html_generieren(){
         let formularhtml = `<form id="eingabeformular" action="#" method="get"></form>
         <div class="eingabeformular-zeile">
             <h1>Neue Einnahme / Ausgabe hinzufügen</h1>
@@ -126,19 +100,16 @@ const eingabeformular = {
         eingabeformular.setAttribute("id", "eingabeformular-container");
         eingabeformular.innerHTML = formularhtml;
         
-        this.absendeEventHinzufuegen(eingabeformular);
+        this._absendeEventHinzufuegen(eingabeformular);
 
         return eingabeformular;
-    },
-
+    }
     anzeigen(){
-        let nav = document.querySelector("#navigationsleiste");
+        let nav = document.querySelector("body");
         if (nav !== null){
-            nav.insertAdjacentElement("afterend", this.html_generieren());
-            this.datumAktualisieren();
+            nav.insertAdjacentElement("afterbegin", this._html);
+            this._datumAktualisieren();
         }
     }
-
-};
-
-eingabeformular.anzeigen();
+    
+}
