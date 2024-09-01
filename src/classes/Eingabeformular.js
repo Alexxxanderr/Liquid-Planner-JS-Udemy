@@ -1,103 +1,72 @@
 "use strict";
 
-const eingabeformular = {
+class Eingabeformular {
 
-    formulardaten_holen(e){
+    constructor () {
+        this._html = this._html_generieren(); 
+    }
+
+    _formulardaten_holen(e){
             return {
             titel: e.target.elements.titel.value,
             betrag: e.target.elements.betrag.value,
             einnahme: e.target.elements.einnahme.checked,
             datum: e.target.elements.datum.valueAsDate
         }
-    },
+    }
 
-    formulardaten_verarbeiten(formulardaten){ 
+    _formulardaten_verarbeiten(formulardaten){ 
         return {
             titel: formulardaten.titel.trim(),
             typ: formulardaten.einnahme === false ? "ausgabe" : "einnahme",
             betrag: parseFloat(formulardaten.betrag)*100,
             datum: formulardaten.datum
         }
-    },
-    
-    formulardaten_validieren(formulardaten){
-        
+    }
+
+    _formulardaten_validieren(formulardaten){
         let fehler = [];
         if (formulardaten.titel === ""){
             fehler.push("Titel");
         }
-
         if (isNaN(formulardaten.betrag)){
             fehler.push("Betrag");
         }
-
         if (formulardaten.datum === null){
             fehler.push("Datum");
         }
-
         return fehler;
-    },
+    }
 
-    datum_aktualisieren(){
+    _datum_aktualisieren(){
         let datums_input = document.querySelector("#datum");
         if(datums_input !== null){
             datums_input.valueAsDate = new Date();
         }
-    },
+    }
 
-    absenden_event_hinzufuegen(eingabeformular){
+    _absenden_event_hinzufuegen(eingabeformular){
         eingabeformular.querySelector("#eingabeformular").addEventListener("submit", e => {
             e.preventDefault();
-            let formulardaten = this.formulardaten_verarbeiten(this.formulardaten_holen(e));
-            let formular_fehler = this.formulardaten_validieren(formulardaten);
-
+            let formulardaten = this._formulardaten_verarbeiten(this._formulardaten_holen(e));
+            let formular_fehler = this._formulardaten_validieren(formulardaten);
             if (formular_fehler.length === 0){
-                haushaltsbuch.eintrag_hinzufuegen(formulardaten);
-                this.fehlerbox_entfernen();
+                haushaltsbuch.eintrag_hinzufuegen(formulardaten); 
+                let bestehende_fehlerbox = document.querySelector(".fehlerbox");
+                if (bestehende_fehlerbox !== null){
+                    bestehende_fehlerbox.remove();
+                }
                 e.target.reset();
-                this.datum_aktualisieren();
+                this._datum_aktualisieren();
             } else {
-                this.fehlerbox_entfernen();
-                this.fehlerbox_anzeigen(formular_fehler);
+                let fehler = new Fehler("Folgende Felder wurden nicht ausgefüllt:", formular_fehler);
+                fehler.anzeigen();
             }
         });
-    },
+    }
 
-     html_fehlerbox_generieren(formular_fehler) {
+    _html_generieren(){
 
-        let fehlerbox = document.createElement("div");
-        fehlerbox.setAttribute("class", "fehlerbox");
-
-        let fehlertext = document.createElement("span");
-        fehlertext.textContent = "Folgende Felder wurden nicht korrekt ausgefüllt:";
-        fehlerbox.insertAdjacentElement("afterbegin", fehlertext);
-
-        let fehlerliste = document.createElement("ul");
-        formular_fehler.forEach(fehler => {
-            let fehlerlistenpunkt = document.createElement("li");
-            fehlerlistenpunkt.textContent = fehler;
-            fehlerliste.insertAdjacentElement("beforeend", fehlerlistenpunkt);
-        });
-        fehlerbox.insertAdjacentElement("beforeend", fehlerliste);
-
-        return fehlerbox;
-    },
-
-    fehlerbox_anzeigen(formular_fehler){
-        let eingabeformular_container = document.querySelector("#eingabeformular-container");
-        if( eingabeformular_container !== null ){
-            eingabeformular_container.insertAdjacentElement("afterbegin", this.html_fehlerbox_generieren(formular_fehler));
-        }
-    },
-
-    fehlerbox_entfernen(){
-        let bestehende_fehlerbox = document.querySelector(".fehlerbox");
-        if (bestehende_fehlerbox !== null){
-            bestehende_fehlerbox.remove();
-        }
-    },
-
-    html_generieren(){
         let eingabeformular = document.createElement("section");
         eingabeformular.setAttribute("id", "eingabeformular-container");
         eingabeformular.innerHTML = `<form id="eingabeformular" action="#" method="get"></form>
@@ -126,18 +95,16 @@ const eingabeformular = {
                 <button class="standard" type="submit" form="eingabeformular">Hinzufügen</button>
             </div>`;  
         
-        this.absenden_event_hinzufuegen(eingabeformular);
+        this._absenden_event_hinzufuegen(eingabeformular);
 
         return eingabeformular;
-    },
+    }
 
     anzeigen(){
-        let navigationsleiste = document.querySelector("#navigationsleiste");
-        if (navigationsleiste !== 0){
-            navigationsleiste.insertAdjacentElement("afterend", this.html_generieren());
-            this.datum_aktualisieren();
+        let navigationsleiste = document.querySelector("body");
+        if (navigationsleiste !== null){
+            navigationsleiste.insertAdjacentElement("afterbegin", this._html);
+            this._datum_aktualisieren();
         };        
-    },  
+    } 
 }
-
-        

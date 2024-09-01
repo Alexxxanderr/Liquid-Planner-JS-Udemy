@@ -1,9 +1,4 @@
-"use strict"
-
-let Nav = new Navigationsleiste();
-Nav.anzeigen();
-let eingabeformular = new Eingabeformular();
-eingabeformular.anzeigen();
+"use strict";
 
 let haushaltsbuch = new Haushaltsbuch();
-
+haushaltsbuch.start();
