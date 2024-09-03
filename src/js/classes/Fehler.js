@@ -1,6 +1,5 @@
-"use strict";
 
-class Fehler {
+export default class Fehler {
     
     constructor(fehlertext, formular_fehler) {
         this._fehlertext = fehlertext;

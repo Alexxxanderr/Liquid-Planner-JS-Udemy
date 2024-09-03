@@ -1,6 +1,5 @@
-"use strict";
 
-class Gesamtbilanz {
+export default class Gesamtbilanz {
     
     constructor() {
         this._resetGesamtbilanz();
